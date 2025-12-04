@@ -134,6 +134,70 @@ onMounted(async () => {
     '/shirt.glb',
     (gltf) => {
       model = gltf.scene
+      
+      // Change model color to red (#E42223) and apply logo
+      const redColor = new THREE.Color(0xE42223)
+      
+      // Create a canvas texture with red background and logo
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      canvas.width = 512
+      canvas.height = 512
+      
+      // Fill with red color
+      ctx.fillStyle = '#E42223'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      
+      // Load logo image and draw it centered on chest area
+      const logoImg = new Image()
+      logoImg.crossOrigin = 'anonymous'
+      logoImg.onload = () => {
+        // Position logo on chest (upper center area)
+        const logoSize = 120
+        const x = (canvas.width - logoSize) / 2
+        const y = canvas.height * 0.25 // Upper part for chest
+        ctx.drawImage(logoImg, x, y, logoSize, logoSize)
+        
+        // Create texture from canvas
+        const combinedTexture = new THREE.CanvasTexture(canvas)
+        combinedTexture.flipY = false
+        combinedTexture.needsUpdate = true
+        
+        // Apply texture to all meshes
+        model.traverse((child) => {
+          if (child.isMesh) {
+            if (child.material) {
+              // Handle both single material and array of materials
+              const materials = Array.isArray(child.material) ? child.material : [child.material]
+              materials.forEach((material) => {
+                if (material) {
+                  material.color = redColor
+                  material.map = combinedTexture
+                  material.needsUpdate = true
+                }
+              })
+            }
+          }
+        })
+      }
+      logoImg.onerror = () => {
+        // If logo fails to load, just use red color
+        model.traverse((child) => {
+          if (child.isMesh) {
+            if (child.material) {
+              const materials = Array.isArray(child.material) ? child.material : [child.material]
+              materials.forEach((material) => {
+                if (material) {
+                  material.color = redColor
+                  material.needsUpdate = true
+                }
+              })
+            }
+          }
+        })
+      }
+      logoImg.src = '/logo.svg'
+      
       scene.add(model)
       
       // Center and scale model
@@ -192,7 +256,7 @@ onUnmounted(() => {
   --bg-color: #F5F5F5;
   --card-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.1);
-  --neon: #FF6B35;
+  --neon: #E42223;
   --text-main: #1a1a1a;
   --text-muted: #666666;
   --grid-margin: 1.25rem;
@@ -203,7 +267,7 @@ onUnmounted(() => {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
-  margin-top: 5rem;
+  margin-top: 7rem;
   margin-bottom: 0;
   padding-bottom: 0;
 }
@@ -246,7 +310,6 @@ onUnmounted(() => {
   position: relative;
   overflow: hidden;
   margin-bottom: 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .box.wide { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: space-between; height: 14rem; position: relative; }
@@ -254,7 +317,7 @@ onUnmounted(() => {
 
 /* Authentic Box specific */
 .badge {
-  background: var(--neon); color: black;
+  background: var(--neon); color: rgb(255, 255, 255);
   font-size: 0.625rem; font-weight: 800; text-transform: uppercase;
   padding: 0.25rem 0.5rem; border-radius: 0.375rem; align-self: flex-start;
   z-index: 2;

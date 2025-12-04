@@ -95,6 +95,70 @@ onMounted(async () => {
       '/shirt.glb',
       (gltf) => {
         model = gltf.scene
+        
+        // Change model color to red (#E42223) and apply logo
+        const redColor = new THREE.Color(0xE42223)
+        
+        // Create a canvas texture with red background and logo
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+        canvas.width = 512
+        canvas.height = 512
+        
+        // Fill with red color
+        ctx.fillStyle = '#E42223'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        
+        // Load logo image and draw it centered on chest area
+        const logoImg = new Image()
+        logoImg.crossOrigin = 'anonymous'
+        logoImg.onload = () => {
+          // Position logo on chest (upper center area)
+          const logoSize = 120
+          const x = (canvas.width - logoSize) / 2
+          const y = canvas.height * 0.25 // Upper part for chest
+          ctx.drawImage(logoImg, x, y, logoSize, logoSize)
+          
+          // Create texture from canvas
+          const combinedTexture = new THREE.CanvasTexture(canvas)
+          combinedTexture.flipY = false
+          combinedTexture.needsUpdate = true
+          
+          // Apply texture to all meshes
+          model.traverse((child) => {
+            if (child.isMesh) {
+              if (child.material) {
+                // Handle both single material and array of materials
+                const materials = Array.isArray(child.material) ? child.material : [child.material]
+                materials.forEach((material) => {
+                  if (material) {
+                    material.color = redColor
+                    material.map = combinedTexture
+                    material.needsUpdate = true
+                  }
+                })
+              }
+            }
+          })
+        }
+        logoImg.onerror = () => {
+          // If logo fails to load, just use red color
+          model.traverse((child) => {
+            if (child.isMesh) {
+              if (child.material) {
+                const materials = Array.isArray(child.material) ? child.material : [child.material]
+                materials.forEach((material) => {
+                  if (material) {
+                    material.color = redColor
+                    material.needsUpdate = true
+                  }
+                })
+              }
+            }
+          })
+        }
+        logoImg.src = '/logo.svg'
+        
         scene.add(model)
         
         // Center and scale model
@@ -236,7 +300,7 @@ onUnmounted(() => {
   transform: translate(-50%, -50%);
   width: 400px;
   height: 400px;
-  background: #FF6B35;
+  background: #E42223;
   filter: blur(100px);
   opacity: 0.2;
   z-index: 0;

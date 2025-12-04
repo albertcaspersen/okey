@@ -1,18 +1,40 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import Scan from './Scan.vue'
 import Locker from './Locker.vue'
+import Rewards from './Rewards.vue'
 
 // Aktiv navigation item
 const activeNav = ref('scan')
+
+// Prevent scrolling on scan page
+watch(activeNav, (newVal) => {
+  if (newVal === 'scan') {
+    document.body.classList.add('no-scroll')
+  } else {
+    document.body.classList.remove('no-scroll')
+  }
+})
+
+onMounted(() => {
+  if (activeNav.value === 'scan') {
+    document.body.classList.add('no-scroll')
+  }
+})
+
+onUnmounted(() => {
+  document.body.classList.remove('no-scroll')
+})
 </script>
 
 <template>
-  <main class="mobile-wrapper">
+  <main class="mobile-wrapper" :class="{ 'no-scroll': activeNav === 'scan' }">
     
     <!-- NAVIGATION -->
     <nav class="top-nav">
-      <div class="logo">O—KEY<span class="reg">®</span></div>
+      <div class="logo">
+        <img src="/logo.svg" alt="Logo" />
+      </div>
       <div class="profile-picture">
         <img src="/profile-fan.jpg" alt="Profil" />
       </div>
@@ -23,6 +45,9 @@ const activeNav = ref('scan')
 
     <!-- LOCKER COMPONENT -->
     <Locker v-if="activeNav === 'locker'" />
+
+    <!-- REWARDS COMPONENT -->
+    <Rewards v-if="activeNav === 'rewards'" />
 
     <!-- SPACER for at bottom nav ikke dækker -->
     <div class="spacer"></div>
@@ -94,7 +119,7 @@ const activeNav = ref('scan')
   --bg-color: #F5F5F5;
   --card-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.1);
-  --neon: #FF6B35; /* Den vigtige sports-tech farve */
+  --neon: #E42223; /* Den vigtige sports-tech farve */
   --text-main: #1a1a1a;
   --text-muted: #666666;
   --grid-margin: 20px; /* Margin left/right for grid */
@@ -109,6 +134,12 @@ const activeNav = ref('scan')
   position: relative;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+.mobile-wrapper.no-scroll {
+  overflow-y: hidden;
+  max-height: 100vh;
+  height: 100vh;
   
   /* Main grid container - 4 kolonner */
   display: grid;
@@ -130,12 +161,15 @@ const activeNav = ref('scan')
 
 .logo {
   grid-column: 2;
-  
-  font-weight: 900;
-  font-size: 20px;
-  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
 }
-.logo .reg { font-size: 10px; vertical-align: top; }
+
+.logo img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
 
 .profile-picture {
   grid-column: 5;

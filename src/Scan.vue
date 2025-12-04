@@ -153,7 +153,7 @@ onUnmounted(async () => {
   --bg-color: #F5F5F5;
   --card-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.1);
-  --neon: #FF6B35;
+  --neon: #E42223;
   --text-main: #1a1a1a;
   --text-muted: #666666;
   --grid-margin: 20px;
@@ -162,35 +162,40 @@ onUnmounted(async () => {
 /* --- HERO --- */
 .hero {
   grid-column: 1 / -1;
-  height: 90vh;
+  height: 100vh;
+  max-height: 100vh;
   position: relative;
   display: grid;
   grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
   align-content: end;
+  overflow: hidden;
 }
 
 .hero-bg {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 110%;
-  /* Billede af fodboldtrøje tekstur */
-  background-image: url('https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=2564&auto=format&fit=crop'); 
+  top: 0; left: 0; width: 105%; height: 100%;
+  background-image: url('/hero-bg.jpg'); 
   background-size: cover;
   background-position: center bottom;
   z-index: 0;
 }
-/* Mørk fade i bunden og toppen for læsbarhed */
-.hero-bg::after {
+
+.hero-bg::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(245,245,245,0.3), rgba(245,245,245,0) 40%, rgba(245,245,245,0.95) 90%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
 .hero-content {
   grid-column: 2 / -2;
   position: relative;
   z-index: 10;
-  margin-bottom: 20px;
+  margin-bottom: 6rem;
 }
 
 .text-block h1 {
@@ -199,6 +204,7 @@ onUnmounted(async () => {
   font-weight: 500;
   margin-bottom: 12px;
   text-transform: uppercase;
+  color: white;
 }
 .text-block p {
   color: var(--text-muted);
@@ -246,7 +252,7 @@ onUnmounted(async () => {
 
 .gc-arrow {
   background: var(--text-main);
-  color: black;
+  color: rgb(255, 255, 255);
   border: none;
   width: 36px; height: 36px;
   border-radius: 50%;
@@ -306,7 +312,7 @@ onUnmounted(async () => {
 .scanning-frame {
   width: 250px;
   height: 250px;
-  border: 2px solid #FF6B35;
+  border: 2px solid #E42223;
   border-radius: 12px;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
   position: relative;
@@ -318,7 +324,7 @@ onUnmounted(async () => {
   position: absolute;
   width: 30px;
   height: 30px;
-  border: 3px solid #FF6B35;
+  border: 3px solid #E42223;
 }
 
 .scanning-frame::before {
@@ -407,7 +413,7 @@ onUnmounted(async () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 107, 53, 0.9);
+  background: rgba(228, 34, 35, 0.9);
   color: white;
   padding: 1rem 1.5rem;
   border-radius: 12px;
