@@ -538,6 +538,14 @@ onUnmounted(() => {
 }
 
 /* Rewards specific */
+.reward-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+}
+
 .reward-icon { font-size: 2rem; margin-bottom: 0.25rem; }
 .reward-text { font-size: 0.875rem; font-weight: 600; }
 
