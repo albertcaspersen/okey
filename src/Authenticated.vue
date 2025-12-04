@@ -27,7 +27,7 @@
 
       <!-- Action Buttons -->
       <div class="action-buttons">
-        <button class="btn-primary">VIEW PRODUCT DETAILS</button>
+        <button class="btn-primary" @click="handleViewDetails">VIEW PRODUCT DETAILS</button>
         <button class="btn-primary">ADD TO MY COLLECTION</button>
         <button class="btn-secondary">ACCESS REWARDS</button>
         <button class="btn-secondary">REGISTER FOR EARLY ACCESS</button>
@@ -37,10 +37,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, inject } from 'vue'
 import { loadThree } from './utils/threeLoader.js'
 
-defineEmits(['close'])
+const emit = defineEmits(['close'])
+
+// Inject the openProductDetails function from App
+const openProductDetails = inject('openProductDetails', () => {})
+
+const handleViewDetails = () => {
+  emit('close') // Close authenticated screen first
+  openProductDetails() // Then open product details
+}
 
 const modelContainer = ref(null)
 let scene, camera, renderer, model, animationId, handleResize

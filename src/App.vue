@@ -1,12 +1,30 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted, provide } from 'vue'
 import Scan from './Scan.vue'
 import Feed from './Feed.vue'
 import Locker from './Locker.vue'
 import Profil from './Profil.vue'
+import ProductDetails from './ProductDetails.vue'
 
 // Aktiv navigation item
 const activeNav = ref('scan')
+
+// Product details view
+const showProductDetails = ref(false)
+const selectedProduct = ref(null)
+
+const openProductDetails = (product = null) => {
+  selectedProduct.value = product
+  showProductDetails.value = true
+}
+
+const closeProductDetails = () => {
+  showProductDetails.value = false
+  selectedProduct.value = null
+}
+
+// Provide functions to child components
+provide('openProductDetails', openProductDetails)
 
 // Prevent scrolling on scan page
 watch(activeNav, (newVal) => {
@@ -29,35 +47,45 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <main class="mobile-wrapper" :class="{ 'no-scroll': activeNav === 'scan' }">
+  <main class="mobile-wrapper" :class="{ 'no-scroll': activeNav === 'scan' || showProductDetails }">
     
-    <!-- NAVIGATION -->
-    <nav class="top-nav">
-      <div class="logo">
-        <img src="/logo.svg" alt="Logo" />
-      </div>
-      <div class="profile-picture" @click="activeNav = 'profile'">
-        <img src="/profile-fan.png" alt="Profil" />
-      </div>
-    </nav>
+    <!-- PRODUCT DETAILS VIEW -->
+    <ProductDetails 
+      v-if="showProductDetails" 
+      :productData="selectedProduct"
+      @close="closeProductDetails" 
+    />
 
-    <!-- SCAN COMPONENT -->
-    <Scan v-if="activeNav === 'scan'" />
+    <!-- MAIN APP CONTENT -->
+    <template v-else>
+      <!-- NAVIGATION -->
+      <nav class="top-nav">
+        <div class="logo">
+          <img src="/logo.svg" alt="Logo" />
+        </div>
+        <div class="profile-picture" @click="activeNav = 'profile'">
+          <img src="/profile-fan.png" alt="Profil" />
+        </div>
+      </nav>
 
-    <!-- FEED COMPONENT -->
-    <Feed v-if="activeNav === 'feed'" />
+      <!-- SCAN COMPONENT -->
+      <Scan v-if="activeNav === 'scan'" />
 
-    <!-- LOCKER COMPONENT -->
-    <Locker v-if="activeNav === 'locker'" />
+      <!-- FEED COMPONENT -->
+      <Feed v-if="activeNav === 'feed'" />
 
-    <!-- PROFIL COMPONENT -->
-    <Profil v-if="activeNav === 'profile'" />
+      <!-- LOCKER COMPONENT -->
+      <Locker v-if="activeNav === 'locker'" />
+
+      <!-- PROFIL COMPONENT -->
+      <Profil v-if="activeNav === 'profile'" />
+    </template>
 
     <!-- SPACER for at bottom nav ikke dækker -->
-    <div class="spacer"></div>
+    <div v-if="!showProductDetails" class="spacer"></div>
 
     <!-- BOTTOM NAVIGATION BAR -->
-    <nav class="bottom-nav">
+    <nav v-if="!showProductDetails" class="bottom-nav">
       <button 
         class="nav-item" 
         :class="{ active: activeNav === 'feed' }"
@@ -165,7 +193,7 @@ onUnmounted(() => {
 }
 
 .logo img {
-  height: 44px;
+  height: 56px;
   width: auto;
   display: block;
 }
@@ -173,8 +201,8 @@ onUnmounted(() => {
 .profile-picture {
   grid-column: 5;
   justify-self: end;
-  width: 40px;
-  height: 40px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid var(--neon);
@@ -295,12 +323,12 @@ onUnmounted(() => {
   }
   
   .logo img {
-    height: 40px;
+    height: 52px;
   }
   
   .profile-picture {
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
   }
   
   .bottom-nav {
@@ -341,12 +369,12 @@ onUnmounted(() => {
   }
   
   .logo img {
-    height: 36px;
+    height: 48px;
   }
   
   .profile-picture {
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
   }
   
   .bottom-nav {
@@ -387,12 +415,12 @@ onUnmounted(() => {
   }
   
   .logo img {
-    height: 32px;
+    height: 44px;
   }
   
   .profile-picture {
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
     border-width: 1.5px;
   }
   

@@ -8,7 +8,7 @@
     <div class="grid-container">
       
       <!-- Box 1: Autenticitet (Bred) -->
-      <div class="box wide glow-effect">
+      <div class="box wide glow-effect" @click="openProductDetails()" style="cursor: pointer;">
         <div class="badge-container">
           <div class="badge">Officiel Ejer</div>
           <div class="player-name">R. HØJLUND</div>
@@ -22,13 +22,20 @@
         <div ref="modelContainer" class="model-container"></div>
         <!-- Baggrundsglød -->
         <div class="neon-blur"></div>
+        <!-- Click indicator -->
+        <div class="view-details-hint">
+          <span>Se detaljer</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
       </div>
 
       <!-- Box 2: Fan Score (Kvadratisk) -->
       <div class="box square fan-score-box">
         <span class="box-label">Fan Score</span>
         <div class="circular-progress">
-          <svg class="progress-ring" width="100" height="100">
+          <svg class="progress-ring" width="100" height="100" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
             <circle
               class="progress-ring-background"
               cx="50"
@@ -174,8 +181,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, inject } from 'vue'
 import { loadThree } from './utils/threeLoader.js'
+
+// Inject the openProductDetails function from parent
+const openProductDetails = inject('openProductDetails', () => {})
 
 const modelContainer = ref(null)
 let scene, camera, renderer, model, animationId, handleResize
@@ -480,6 +490,39 @@ onUnmounted(() => {
   filter: blur(3rem); opacity: 0.35;
 }
 
+.view-details-hint {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 2rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-main);
+  z-index: 3;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+}
+
+.box.wide:hover .view-details-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.view-details-hint svg {
+  transition: transform 0.2s ease;
+}
+
+.box.wide:hover .view-details-hint svg {
+  transform: translateX(2px);
+}
+
 /* Fan Score specific */
 .box-label { position: absolute; top: 1rem; left: 1rem; font-size: 0.6875rem; color: var(--text-muted); }
 
@@ -488,6 +531,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: visible;
 }
 
 .circular-progress {
@@ -497,6 +541,7 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: visible;
 }
 
 .progress-ring {
@@ -504,6 +549,11 @@ onUnmounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: visible;
 }
 
 .progress-ring-circle {
@@ -879,6 +929,8 @@ onUnmounted(() => {
   .progress-ring {
     width: 80px;
     height: 80px;
+    max-width: 85%;
+    max-height: 85%;
   }
   
   .reward-icon {
@@ -1013,6 +1065,8 @@ onUnmounted(() => {
   .progress-ring {
     width: 70px;
     height: 70px;
+    max-width: 80%;
+    max-height: 80%;
   }
   
   .rewards-section {
@@ -1078,6 +1132,8 @@ onUnmounted(() => {
   .progress-ring {
     width: 60px;
     height: 60px;
+    max-width: 75%;
+    max-height: 75%;
   }
   
   .rewards-section {
