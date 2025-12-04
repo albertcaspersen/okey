@@ -7,5 +7,8 @@ export default defineConfig({
     target: 'es2022',
     minify: 'esbuild',
   },
+  esbuild: {
+    target: 'es2022',
+  },
 })
 
