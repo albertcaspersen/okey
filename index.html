@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Okey App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- Three.js CDN loader (fallback til lokal installation hvis CDN fejler) -->
+    <script type="module">
+      // Forsøg at loade three.js fra CDN
+      try {
+        const threeModule = await import('https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.module.js');
+        window.THREE = threeModule;
+        window.THREE_CDN_LOADED = true;
+        console.log('✓ Three.js loaded from CDN');
+      } catch (error) {
+        console.warn('⚠ Three.js CDN failed, will use local installation:', error);
+        window.THREE_CDN_LOADED = false;
+      }
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+
