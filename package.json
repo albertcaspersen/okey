@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "html5-qrcode": "^2.3.8",
     "three": "^0.181.2",
     "vue": "^3.4.0"
   },

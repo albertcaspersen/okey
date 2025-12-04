@@ -31,27 +31,34 @@
   </header>
 
   <!-- Camera Modal -->
-  <div v-if="isCameraOpen" class="camera-modal" @click.self="closeCamera">
+  <div v-if="isCameraOpen && !showAuthenticated" class="camera-modal" @click.self="closeCamera">
     <div class="camera-container">
-      <video ref="videoElement" autoplay playsinline class="camera-video"></video>
+      <div ref="qrScannerContainer" id="qr-scanner" class="qr-scanner-container"></div>
       <div class="camera-controls">
         <button class="close-btn" @click="closeCamera">✕</button>
-        <button class="capture-btn" @click="capturePhoto">
-          <span class="capture-circle"></span>
-        </button>
       </div>
       <div v-if="error" class="error-message">{{ error }}</div>
+      <div class="scanning-overlay">
+        <div class="scanning-frame"></div>
+        <p class="scanning-text">Ret QR-koden inden for rammen</p>
+      </div>
     </div>
   </div>
+
+  <!-- Authenticated Screen -->
+  <Authenticated v-if="showAuthenticated" @close="closeAuthenticated" />
 </template>
 
 <script setup>
-import { ref, onUnmounted } from 'vue'
+import { ref, onUnmounted, nextTick } from 'vue'
+import { Html5Qrcode } from 'html5-qrcode'
+import Authenticated from './Authenticated.vue'
 
 const isCameraOpen = ref(false)
-const videoElement = ref(null)
-const stream = ref(null)
+const qrScannerContainer = ref(null)
+const showAuthenticated = ref(false)
 const error = ref(null)
+let html5QrCode = null
 
 const openCamera = async () => {
   try {
@@ -59,21 +66,35 @@ const openCamera = async () => {
     isCameraOpen.value = true
     
     // Wait for DOM to update
-    await new Promise(resolve => setTimeout(resolve, 100))
+    await nextTick()
     
-    if (!videoElement.value) return
+    if (!qrScannerContainer.value) return
     
-    // Request camera access
-    const mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: 'environment', // Use back camera on mobile
-        width: { ideal: 1280 },
-        height: { ideal: 720 }
+    // Initialize QR code scanner
+    html5QrCode = new Html5Qrcode(qrScannerContainer.value.id)
+    
+    // Start scanning
+    await html5QrCode.start(
+      {
+        facingMode: 'environment' // Use back camera on mobile
+      },
+      {
+        fps: 10, // Frames per second
+        qrbox: { width: 250, height: 250 }, // Scanning area
+        aspectRatio: 1.0
+      },
+      (decodedText, decodedResult) => {
+        // QR code detected - show authenticated screen
+        onQRCodeScanned(decodedText)
+      },
+      (errorMessage) => {
+        // Ignore scanning errors (they happen frequently during scanning)
+        // Only log if it's a real error
+        if (errorMessage && !errorMessage.includes('NotFoundException')) {
+          console.log('QR scan error:', errorMessage)
+        }
       }
-    })
-    
-    stream.value = mediaStream
-    videoElement.value.srcObject = mediaStream
+    )
   } catch (err) {
     console.error('Error accessing camera:', err)
     error.value = err.name === 'NotAllowedError' 
@@ -84,29 +105,45 @@ const openCamera = async () => {
   }
 }
 
-const closeCamera = () => {
-  // Stop all tracks
-  if (stream.value) {
-    stream.value.getTracks().forEach(track => track.stop())
-    stream.value = null
+const onQRCodeScanned = (qrCodeText) => {
+  // Stop scanning
+  if (html5QrCode) {
+    html5QrCode.stop().then(() => {
+      html5QrCode.clear()
+      html5QrCode = null
+    }).catch(() => {
+      html5QrCode = null
+    })
   }
   
-  if (videoElement.value) {
-    videoElement.value.srcObject = null
+  // Show authenticated screen (regardless of QR code content)
+  isCameraOpen.value = false
+  showAuthenticated.value = true
+}
+
+const closeCamera = async () => {
+  // Stop QR scanner
+  if (html5QrCode) {
+    try {
+      await html5QrCode.stop()
+      html5QrCode.clear()
+    } catch (err) {
+      console.log('Error stopping scanner:', err)
+    }
+    html5QrCode = null
   }
   
   isCameraOpen.value = false
   error.value = null
 }
 
-const capturePhoto = () => {
-  // TODO: Implement photo capture logic
-  console.log('Capture photo')
+const closeAuthenticated = () => {
+  showAuthenticated.value = false
 }
 
 // Cleanup on unmount
-onUnmounted(() => {
-  closeCamera()
+onUnmounted(async () => {
+  await closeCamera()
 })
 </script>
 
@@ -240,10 +277,73 @@ onUnmounted(() => {
   justify-content: center;
 }
 
-.camera-video {
+.qr-scanner-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.qr-scanner-container video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.scanning-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.scanning-frame {
+  width: 250px;
+  height: 250px;
+  border: 2px solid #FF6B35;
+  border-radius: 12px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.scanning-frame::before,
+.scanning-frame::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #FF6B35;
+}
+
+.scanning-frame::before {
+  top: -3px;
+  left: -3px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.scanning-frame::after {
+  bottom: -3px;
+  right: -3px;
+  border-left: none;
+  border-top: none;
+}
+
+.scanning-text {
+  margin-top: 2rem;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
 
 .camera-controls {
