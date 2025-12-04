@@ -134,11 +134,11 @@ onUnmounted(() => {
 
 .hero-bg {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0; left: 0; width: 100%; height: 110%;
   /* Billede af fodboldtrøje tekstur */
   background-image: url('https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=2564&auto=format&fit=crop'); 
   background-size: cover;
-  background-position: center;
+  background-position: center bottom;
   z-index: 0;
 }
 /* Mørk fade i bunden og toppen for læsbarhed */

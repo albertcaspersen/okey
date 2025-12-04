@@ -24,25 +24,6 @@ const activeNav = ref('scan')
     <!-- LOCKER COMPONENT -->
     <Locker v-if="activeNav === 'locker'" />
 
-    <!-- TECH EXPLAINER (kun på Scan siden) -->
-    <section v-if="activeNav === 'scan'" class="tech-section">
-      <h3>The Digital Twin</h3>
-      <ul class="tech-list">
-        <li>
-          <span class="check-icon">✓</span>
-          <span>Umulig at kopiere (Patenteret)</span>
-        </li>
-        <li>
-          <span class="check-icon">✓</span>
-          <span>Låser op for eksklusivt indhold</span>
-        </li>
-        <li>
-          <span class="check-icon">✓</span>
-          <span>Bevis på ejerskab ved videresalg</span>
-        </li>
-      </ul>
-    </section>
-
     <!-- SPACER for at bottom nav ikke dækker -->
     <div class="spacer"></div>
 
@@ -178,24 +159,6 @@ const activeNav = ref('scan')
   object-fit: cover;
   display: block;
 }
-
-/* --- TECH --- */
-.tech-section { 
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
-}
-.tech-section h3 { 
-  grid-column: 2 / -2;
-  font-size: 18px; 
-  margin-bottom: 16px; 
-}
-.tech-list { 
-  grid-column: 2 / -2;
-  list-style: none; 
-}
-.tech-list li { display: flex; gap: 12px; margin-bottom: 12px; font-size: 14px; color: var(--text-muted); }
-.check-icon { color: var(--neon); font-weight: bold; }
 
 /* --- BOTTOM NAVIGATION --- */
 .spacer { 
