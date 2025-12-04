@@ -16,7 +16,7 @@
     </header>
 
     <!-- Scrollable Content -->
-    <div class="scroll-content">
+    <div ref="scrollContent" class="scroll-content">
       <!-- Product Info -->
       <section class="product-info">
         <p class="serial">Serial #{{ product.serial }}</p>
@@ -210,6 +210,7 @@ const product = ref(props.productData || {
 
 const isFavorite = ref(false)
 const modelContainer = ref(null)
+const scrollContent = ref(null)
 
 let scene, camera, renderer, model, animationId, handleResize
 let THREE = null
@@ -220,6 +221,11 @@ const toggleFavorite = () => {
 }
 
 onMounted(async () => {
+  // Scroll to top when component mounts
+  if (scrollContent.value) {
+    scrollContent.value.scrollTop = 0
+  }
+  
   try {
     const threeLibs = await loadThree()
     THREE = threeLibs.THREE
@@ -325,7 +331,7 @@ onUnmounted(() => {
 /* --- VARIABLES --- */
 .product-details {
   --bg-color: #F6F6F6;
-  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-bg: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(0, 0, 0, 0.08);
   --neon: #E42223;
   --text-main: #1a1a1a;
@@ -539,6 +545,8 @@ onUnmounted(() => {
 
 .stat-card {
   background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 1rem;
   padding: 1rem;
@@ -664,6 +672,8 @@ onUnmounted(() => {
 /* Card Sections */
 .card-section {
   background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 1rem;
   padding: 1rem;

@@ -16,6 +16,7 @@ const selectedProduct = ref(null)
 const openProductDetails = (product = null) => {
   selectedProduct.value = product
   showProductDetails.value = true
+  window.scrollTo({ top: 0, behavior: 'instant' })
 }
 
 const closeProductDetails = () => {
@@ -26,12 +27,22 @@ const closeProductDetails = () => {
 // Provide functions to child components
 provide('openProductDetails', openProductDetails)
 
-// Prevent scrolling on scan page
+// Prevent scrolling on scan page and scroll to top on navigation
 watch(activeNav, (newVal) => {
+  // Scroll to top when navigating
+  window.scrollTo({ top: 0, behavior: 'instant' })
+  
   if (newVal === 'scan') {
     document.body.classList.add('no-scroll')
   } else {
     document.body.classList.remove('no-scroll')
+  }
+})
+
+// Scroll to top when opening/closing product details
+watch(showProductDetails, (newVal) => {
+  if (newVal) {
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 })
 
@@ -63,7 +74,7 @@ onUnmounted(() => {
         <div class="logo">
           <img src="/logo.svg" alt="Logo" />
         </div>
-        <div class="profile-picture" @click="activeNav = 'profile'">
+        <div class="profile-picture" @click="activeNav = 'profile'; window.scrollTo({ top: 0, behavior: 'instant' })">
           <img src="/profile-fan.png" alt="Profil" />
         </div>
       </nav>
@@ -89,7 +100,7 @@ onUnmounted(() => {
       <button 
         class="nav-item" 
         :class="{ active: activeNav === 'feed' }"
-        @click="activeNav = 'feed'"
+        @click="activeNav = 'feed'; window.scrollTo({ top: 0, behavior: 'instant' })"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -99,11 +110,11 @@ onUnmounted(() => {
       </button>
 
       <button 
-        class="nav-item scan-btn" 
+        class="nav-item" 
         :class="{ active: activeNav === 'scan' }"
-        @click="activeNav = 'scan'"
+        @click="activeNav = 'scan'; window.scrollTo({ top: 0, behavior: 'instant' })"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
           <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
           <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
@@ -116,7 +127,7 @@ onUnmounted(() => {
       <button 
         class="nav-item" 
         :class="{ active: activeNav === 'locker' }"
-        @click="activeNav = 'locker'"
+        @click="activeNav = 'locker'; window.scrollTo({ top: 0, behavior: 'instant' })"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.6 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.17a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path>
@@ -127,7 +138,7 @@ onUnmounted(() => {
       <button 
         class="nav-item" 
         :class="{ active: activeNav === 'profile' }"
-        @click="activeNav = 'profile'"
+        @click="activeNav = 'profile'; window.scrollTo({ top: 0, behavior: 'instant' })"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -290,26 +301,8 @@ onUnmounted(() => {
   color: var(--neon);
 }
 
-.nav-item:not(.scan-btn):hover {
+.nav-item:hover {
   color: var(--text-main);
-}
-
-/* Scan button - fremhævet */
-.scan-btn {
-  position: relative;
-}
-
-
-.scan-btn svg {
-  position: relative;
-  z-index: 1;
-  width: 26px;
-  height: 26px;
-}
-
-.scan-btn span {
-  position: relative;
-  z-index: 1;
 }
 
 /* Responsive breakpoints */
@@ -347,11 +340,6 @@ onUnmounted(() => {
   
   .nav-item span {
     font-size: 9px;
-  }
-  
-  .scan-btn svg {
-    width: 24px;
-    height: 24px;
   }
   
   .spacer {
@@ -395,11 +383,6 @@ onUnmounted(() => {
     font-size: 8px;
   }
   
-  .scan-btn svg {
-    width: 22px;
-    height: 22px;
-  }
-  
   .spacer {
     height: 65px;
   }
@@ -440,11 +423,6 @@ onUnmounted(() => {
   
   .nav-item span {
     font-size: 7px;
-  }
-  
-  .scan-btn svg {
-    width: 20px;
-    height: 20px;
   }
   
   .spacer {

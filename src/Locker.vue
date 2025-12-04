@@ -22,13 +22,6 @@
         <div ref="modelContainer" class="model-container"></div>
         <!-- Baggrundsglød -->
         <div class="neon-blur"></div>
-        <!-- Click indicator -->
-        <div class="view-details-hint">
-          <span>Se detaljer</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
       </div>
 
       <!-- Box 2: Fan Score (Kvadratisk) -->
@@ -407,7 +400,7 @@ onUnmounted(() => {
 }
 .bento-section .section-header h2 { 
     font-size: 2rem; 
-    font-weight: 400;
+    font-weight: 500;
     margin-bottom: 1rem;
 }
 .live-indicator { 
@@ -488,39 +481,6 @@ onUnmounted(() => {
   position: absolute; top: -1.875rem; right: -1.875rem;
   width: 6.25rem; height: 6.25rem; background: var(--neon);
   filter: blur(3rem); opacity: 0.35;
-}
-
-.view-details-hint {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.375rem 0.75rem;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 2rem;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: var(--text-main);
-  z-index: 3;
-  opacity: 0;
-  transform: translateX(10px);
-  transition: all 0.3s ease;
-}
-
-.box.wide:hover .view-details-hint {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.view-details-hint svg {
-  transition: transform 0.2s ease;
-}
-
-.box.wide:hover .view-details-hint svg {
-  transform: translateX(2px);
 }
 
 /* Fan Score specific */
@@ -625,7 +585,7 @@ onUnmounted(() => {
 
 .section-header h2 {
   font-size: 2rem;
-  font-weight: 500;
+  font-weight: 300;
   color: var(--text-main);
 }
 
@@ -762,8 +722,12 @@ onUnmounted(() => {
   color: var(--text-main);
 }
 
+.section-title-text {
+  margin-bottom: 1rem;
+}
+
 .raffle-card {
-  background: var(--dark-card);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 1.25rem;
@@ -776,13 +740,13 @@ onUnmounted(() => {
 .raffle-icon {
   width: 60px;
   height: 60px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: white;
+  color: var(--neon);
 }
 
 .raffle-icon svg {
@@ -797,7 +761,7 @@ onUnmounted(() => {
 .raffle-content h4 {
   font-size: 1rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-main);
   margin-bottom: 0.25rem;
 }
 
@@ -808,8 +772,8 @@ onUnmounted(() => {
 
 .btn-participate {
   padding: 0.625rem 1.25rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--neon);
+  border: 1px solid var(--neon);
   border-radius: 0.75rem;
   color: white;
   font-weight: 600;
@@ -820,7 +784,8 @@ onUnmounted(() => {
 }
 
 .btn-participate:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #c11d1e;
+  border-color: #c11d1e;
 }
 
 /* Badges Section */
@@ -835,7 +800,7 @@ onUnmounted(() => {
 }
 
 .badge-card {
-  background: var(--dark-card);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 1.25rem;
@@ -851,7 +816,7 @@ onUnmounted(() => {
 .badge-icon {
   width: 40px;
   height: 40px;
-  color: white;
+  color: var(--neon);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -865,7 +830,7 @@ onUnmounted(() => {
 .badge-name {
   font-size: 0.875rem;
   font-weight: 600;
-  color: white;
+  color: var(--text-main);
   text-align: center;
 }
 

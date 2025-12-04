@@ -11,6 +11,10 @@
 
     <!-- Glass Action Card -->
     <div class="glass-card floating" @click="openCamera">
+      <div class="gc-text">
+        <span class="label">Har du en trøje?</span>
+        <span class="action">Scan og Validér</span>
+      </div>
       <div class="gc-icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
@@ -20,11 +24,6 @@
           <rect x="7" y="7" width="10" height="10" rx="1"></rect>
         </svg>
       </div>
-      <div class="gc-text">
-        <span class="label">Har du en trøje?</span>
-        <span class="action">Scan og Validér</span>
-      </div>
-      <button class="gc-arrow">→</button>
     </div>
   </header>
 
@@ -249,25 +248,21 @@ onUnmounted(async () => {
 
 .gc-icon {
   width: 44px; height: 44px;
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--text-main);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  color: var(--neon);
-  transform: translateX(-6px);
+  color: rgb(255, 255, 255);
+  transform: translateX(6px);
 }
 
-.gc-text { display: flex; flex-direction: column; flex: 1; }
+.gc-text { 
+  display: flex; 
+  flex-direction: column; 
+  flex: 1; 
+  margin-left: 0.5rem;
+}
 .gc-text .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
 .gc-text .action { font-size: 15px; font-weight: 600; color: var(--text-main); }
-
-.gc-arrow {
-  background: var(--text-main);
-  color: rgb(255, 255, 255);
-  border: none;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  font-weight: bold;
-}
 
 /* Camera Modal */
 .camera-modal {
@@ -469,6 +464,7 @@ onUnmounted(async () => {
   .gc-icon {
     width: 40px;
     height: 40px;
+    font-size: 18px;
   }
   
   .gc-text .label {
@@ -477,12 +473,6 @@ onUnmounted(async () => {
   
   .gc-text .action {
     font-size: 14px;
-  }
-  
-  .gc-arrow {
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
   }
   
   .scanning-frame {
@@ -547,6 +537,7 @@ onUnmounted(async () => {
   .gc-icon {
     width: 36px;
     height: 36px;
+    font-size: 16px;
   }
   
   .gc-text .label {
@@ -558,8 +549,8 @@ onUnmounted(async () => {
   }
   
   .gc-arrow {
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     font-size: 16px;
   }
   
@@ -626,6 +617,7 @@ onUnmounted(async () => {
   .gc-icon {
     width: 32px;
     height: 32px;
+    font-size: 14px;
   }
   
   .gc-text .label {
@@ -634,12 +626,6 @@ onUnmounted(async () => {
   
   .gc-text .action {
     font-size: 12px;
-  }
-  
-  .gc-arrow {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
   }
   
   .scanning-frame {
