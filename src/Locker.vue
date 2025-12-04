@@ -69,7 +69,7 @@ let THREE = null
 let GLTFLoader = null
 
 onMounted(async () => {
-  // Load three.js med CDN-first og fallback
+  // Load three.js fra lokal installation
   try {
     const threeLibs = await loadThree()
     THREE = threeLibs.THREE
