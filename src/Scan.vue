@@ -7,7 +7,7 @@
     <div class="hero-content">
       <div class="text-block">
         <h1>OWN THE<br>GAME.</h1>
-        <p>Gør din trøjesamling digital. 100% Autentisk. 100% Din.</p>
+        <p>Gør din trøjesamling digital. <br> 100% Autentisk. 100% Din.</p>
       </div>
 
       <!-- Glass Action Card -->
@@ -150,7 +150,7 @@ onUnmounted(async () => {
 <style scoped>
 /* --- VARIABLER --- */
 :root {
-  --bg-color: #F5F5F5;
+  --bg-color: #F6F6F6;
   --card-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.1);
   --neon: #E42223;
@@ -174,9 +174,9 @@ onUnmounted(async () => {
 .hero-bg {
   position: absolute;
   top: 0; left: 0; width: 105%; height: 100%;
-  background-image: url('/hero-bg.jpg'); 
+  background-image: url('/pics/image 19.JPG'); 
   background-size: cover;
-  background-position: center bottom;
+  background-position: 70% bottom;
   z-index: 0;
 }
 
@@ -198,6 +198,10 @@ onUnmounted(async () => {
   margin-bottom: 6rem;
 }
 
+.text-block {
+  margin-bottom: 25rem;
+}
+
 .text-block h1 {
   font-size: 3rem;
   line-height: 0.9;
@@ -207,9 +211,9 @@ onUnmounted(async () => {
   color: white;
 }
 .text-block p {
-  color: var(--text-muted);
-  font-size: 16px;
-  margin-bottom: 32px;
+  color: rgb(216, 216, 216);
+  font-size: 1rem;
+  margin-bottom: 0;
   max-width: 80%;
 }
 
@@ -219,7 +223,7 @@ onUnmounted(async () => {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  border-radius: 24px;
+  border-radius: 50px;
   padding: 14px 20px;
   display: flex;
   align-items: center;

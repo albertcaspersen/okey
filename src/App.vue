@@ -1,8 +1,9 @@
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import Scan from './Scan.vue'
+import Feed from './Feed.vue'
 import Locker from './Locker.vue'
-import Rewards from './Rewards.vue'
+import Profil from './Profil.vue'
 
 // Aktiv navigation item
 const activeNav = ref('scan')
@@ -35,7 +36,7 @@ onUnmounted(() => {
       <div class="logo">
         <img src="/logo.svg" alt="Logo" />
       </div>
-      <div class="profile-picture">
+      <div class="profile-picture" @click="activeNav = 'profile'">
         <img src="/profile-fan.jpg" alt="Profil" />
       </div>
     </nav>
@@ -43,11 +44,14 @@ onUnmounted(() => {
     <!-- SCAN COMPONENT -->
     <Scan v-if="activeNav === 'scan'" />
 
+    <!-- FEED COMPONENT -->
+    <Feed v-if="activeNav === 'feed'" />
+
     <!-- LOCKER COMPONENT -->
     <Locker v-if="activeNav === 'locker'" />
 
-    <!-- REWARDS COMPONENT -->
-    <Rewards v-if="activeNav === 'rewards'" />
+    <!-- PROFIL COMPONENT -->
+    <Profil v-if="activeNav === 'profile'" />
 
     <!-- SPACER for at bottom nav ikke dækker -->
     <div class="spacer"></div>
@@ -56,14 +60,14 @@ onUnmounted(() => {
     <nav class="bottom-nav">
       <button 
         class="nav-item" 
-        :class="{ active: activeNav === 'locker' }"
-        @click="activeNav = 'locker'"
+        :class="{ active: activeNav === 'feed' }"
+        @click="activeNav = 'feed'"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
           <polyline points="9 22 9 12 15 12 15 22"></polyline>
         </svg>
-        <span>Locker</span>
+        <span>Feed</span>
       </button>
 
       <button 
@@ -83,18 +87,13 @@ onUnmounted(() => {
 
       <button 
         class="nav-item" 
-        :class="{ active: activeNav === 'rewards' }"
-        @click="activeNav = 'rewards'"
+        :class="{ active: activeNav === 'locker' }"
+        @click="activeNav = 'locker'"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-          <path d="M4 22h16"></path>
-          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-          <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+          <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.6 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.17a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path>
         </svg>
-        <span>Rewards</span>
+        <span>Locker</span>
       </button>
 
       <button 
@@ -116,7 +115,7 @@ onUnmounted(() => {
 <style scoped>
 /* --- VARIABLER --- */
 .mobile-wrapper {
-  --bg-color: #F5F5F5;
+  --bg-color: #F6F6F6;
   --card-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.1);
   --neon: #E42223; /* Den vigtige sports-tech farve */
@@ -124,7 +123,7 @@ onUnmounted(() => {
   --text-muted: #666666;
   --grid-margin: 20px; /* Margin left/right for grid */
   
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-main);
   min-height: 100vh;
@@ -218,6 +217,7 @@ onUnmounted(() => {
   padding-bottom: calc(12px + env(safe-area-inset-bottom));
   z-index: 100;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  
 }
 
 .nav-item {
