@@ -84,7 +84,7 @@
   --glass-border: rgba(0, 0, 0, 0.1);
   --neon: #E42223;
   --text-main: #1a1a1a;
-  --text-muted: #666666;
+  --text-muted: #9e9e9e;
   --grid-margin: 1.25rem;
 }
 
@@ -155,9 +155,9 @@
   left: 1rem;
   background: var(--neon);
   color: white;
-  padding: 0.375rem 0.75rem;
+  padding: 0.2rem 0.75rem;
   border-radius: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -189,18 +189,115 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-@media (max-width: 480px) {
+/* Responsive breakpoints */
+@media (max-width: 460px) {
   .feed-section {
     margin-top: 6rem;
+    grid-template-columns: 1rem 1fr 1fr 1fr 1fr 1rem;
+    --grid-margin: 1rem;
   }
   
   .section-header h2 {
     font-size: 1.75rem;
   }
   
-  .post-text {
+  .welcome-text {
+    font-size: 1.1rem;
+  }
+  
+  .feed-container {
+    gap: 0.625rem;
+  }
+  
+  .feed-post {
+    border-radius: 1rem;
+  }
+  
+  .post-badge {
+    font-size: 0.5625rem;
+    padding: 0.15rem 0.625rem;
+    top: 0.75rem;
+    left: 0.75rem;
+  }
+  
+  .post-text-overlay {
     padding: 1rem;
-    font-size: 0.875rem;
+  }
+  
+  .post-text-overlay h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.375rem;
+  }
+  
+  .post-text-overlay p {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .feed-section {
+    grid-template-columns: 0.75rem 1fr 1fr 1fr 1fr 0.75rem;
+    margin-top: 5.5rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .welcome-text {
+    font-size: 1rem;
+  }
+  
+  .feed-container {
+    gap: 0.5rem;
+  }
+  
+  .feed-post {
+    border-radius: 0.875rem;
+  }
+  
+  .post-text-overlay {
+    padding: 0.875rem;
+  }
+  
+  .post-text-overlay h3 {
+    font-size: 1rem;
+  }
+  
+  .post-text-overlay p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .feed-section {
+    grid-template-columns: 0.5rem 1fr 1fr 1fr 1fr 0.5rem;
+    margin-top: 5rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.375rem;
+  }
+  
+  .welcome-text {
+    font-size: 0.9375rem;
+  }
+  
+  .post-badge {
+    font-size: 0.5rem;
+    padding: 0.125rem 0.5rem;
+  }
+  
+  .post-text-overlay {
+    padding: 0.75rem;
+  }
+  
+  .post-text-overlay h3 {
+    font-size: 0.9375rem;
+  }
+  
+  .post-text-overlay p {
+    font-size: 0.6875rem;
   }
 }
 </style>

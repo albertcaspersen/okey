@@ -235,22 +235,192 @@
   display: none;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
+/* Responsive breakpoints */
+@media (max-width: 460px) {
+  .profile-section {
+    grid-template-columns: 1rem 1fr 1fr 1fr 1fr 1rem;
+    margin-top: 6rem;
+    --grid-margin: 1rem;
+  }
+  
+  .profile-picture-container {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1.25rem;
+  }
+  
   .profile-name {
     font-size: 1.75rem;
   }
   
+  .profile-subtitle {
+    font-size: 0.9375rem;
+  }
+  
+  .stats-container {
+    gap: 0.625rem;
+    margin-bottom: 1.5rem;
+  }
+  
   .stat-card {
     padding: 1.25rem 0.75rem;
+    border-radius: 1rem;
   }
   
   .stat-number {
     font-size: 1.75rem;
+    margin-bottom: 0.375rem;
   }
   
   .rank-percent {
     font-size: 1.5rem;
+  }
+  
+  .stat-label {
+    font-size: 0.6875rem;
+  }
+  
+  .actions-container {
+    gap: 0.625rem;
+  }
+  
+  .action-button {
+    padding: 0.875rem 1.25rem;
+    border-radius: 1rem;
+  }
+  
+  .action-text {
+    font-size: 0.9375rem;
+  }
+  
+  .action-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 375px) {
+  .profile-section {
+    grid-template-columns: 0.75rem 1fr 1fr 1fr 1fr 0.75rem;
+    margin-top: 5.5rem;
+  }
+  
+  .profile-picture-container {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-name {
+    font-size: 1.5rem;
+  }
+  
+  .profile-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .stats-container {
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .stat-card {
+    padding: 1rem 0.625rem;
+    border-radius: 0.875rem;
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+  }
+  
+  .rank-percent {
+    font-size: 1.375rem;
+  }
+  
+  .rank-label {
+    font-size: 0.8125rem;
+  }
+  
+  .stat-label {
+    font-size: 0.625rem;
+  }
+  
+  .action-button {
+    padding: 0.75rem 1rem;
+  }
+  
+  .action-text {
+    font-size: 0.875rem;
+  }
+  
+  .action-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 320px) {
+  .profile-section {
+    grid-template-columns: 0.5rem 1fr 1fr 1fr 1fr 0.5rem;
+    margin-top: 5rem;
+  }
+  
+  .profile-picture-container {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 0.875rem;
+  }
+  
+  .profile-name {
+    font-size: 1.375rem;
+  }
+  
+  .profile-subtitle {
+    font-size: 0.8125rem;
+  }
+  
+  .stats-container {
+    gap: 0.375rem;
+    margin-bottom: 1rem;
+  }
+  
+  .stat-card {
+    padding: 0.875rem 0.5rem;
+    border-radius: 0.75rem;
+  }
+  
+  .stat-number {
+    font-size: 1.375rem;
+  }
+  
+  .rank-percent {
+    font-size: 1.25rem;
+  }
+  
+  .rank-label {
+    font-size: 0.75rem;
+  }
+  
+  .stat-label {
+    font-size: 0.5625rem;
+  }
+  
+  .actions-container {
+    gap: 0.5rem;
+  }
+  
+  .action-button {
+    padding: 0.625rem 0.875rem;
+    border-radius: 0.875rem;
+  }
+  
+  .action-text {
+    font-size: 0.8125rem;
+  }
+  
+  .action-button svg {
+    width: 14px;
+    height: 14px;
   }
 }
 </style>

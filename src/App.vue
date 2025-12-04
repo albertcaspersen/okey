@@ -128,7 +128,7 @@ onUnmounted(() => {
   color: var(--text-main);
   min-height: 100vh;
   width: 100%;
-  max-width: 430px; /* iPhone Pro Max bredde */
+  max-width: 460px; /* Responsiv op til 460px */
   margin: 0 auto;
   position: relative;
   overflow-x: hidden;
@@ -198,7 +198,7 @@ onUnmounted(() => {
 /* --- BOTTOM NAVIGATION --- */
 .spacer { 
   grid-column: 1 / -1;
-  height: 90px; 
+  height: 75px; 
 }
 
 .bottom-nav {
@@ -207,7 +207,7 @@ onUnmounted(() => {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 430px;
+  max-width: 460px;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -215,8 +215,8 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
   align-items: center;
-  padding: 12px 0;
-  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  padding: 8px 0;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
   z-index: 100;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
   
@@ -230,8 +230,8 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 8px 0;
+  gap: 3px;
+  padding: 6px 0;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -282,5 +282,145 @@ onUnmounted(() => {
 .scan-btn span {
   position: relative;
   z-index: 1;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 460px) {
+  .mobile-wrapper {
+    --grid-margin: 1rem;
+  }
+  
+  .top-nav {
+    padding-top: 24px;
+  }
+  
+  .logo img {
+    height: 40px;
+  }
+  
+  .profile-picture {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .bottom-nav {
+    padding: 6px 0;
+  }
+  
+  .nav-item {
+    padding: 5px 0;
+    gap: 2px;
+  }
+  
+  .nav-item svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .nav-item span {
+    font-size: 9px;
+  }
+  
+  .scan-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .spacer {
+    height: 70px;
+  }
+}
+
+@media (max-width: 375px) {
+  .mobile-wrapper {
+    --grid-margin: 0.75rem;
+  }
+  
+  .top-nav {
+    padding-top: 20px;
+  }
+  
+  .logo img {
+    height: 36px;
+  }
+  
+  .profile-picture {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .bottom-nav {
+    padding: 5px 0;
+  }
+  
+  .nav-item {
+    padding: 4px 0;
+    gap: 2px;
+  }
+  
+  .nav-item svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .nav-item span {
+    font-size: 8px;
+  }
+  
+  .scan-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .spacer {
+    height: 65px;
+  }
+}
+
+@media (max-width: 320px) {
+  .mobile-wrapper {
+    --grid-margin: 0.5rem;
+  }
+  
+  .top-nav {
+    padding-top: 18px;
+  }
+  
+  .logo img {
+    height: 32px;
+  }
+  
+  .profile-picture {
+    width: 28px;
+    height: 28px;
+    border-width: 1.5px;
+  }
+  
+  .bottom-nav {
+    padding: 4px 0;
+  }
+  
+  .nav-item {
+    padding: 3px 0;
+    gap: 1px;
+  }
+  
+  .nav-item svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .nav-item span {
+    font-size: 7px;
+  }
+  
+  .scan-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .spacer {
+    height: 60px;
+  }
 }
 </style>

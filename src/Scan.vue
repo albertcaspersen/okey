@@ -4,29 +4,27 @@
     <!-- Baggrundsbillede med overlay -->
     <div class="hero-bg"></div>
     
-    <div class="hero-content">
-      <div class="text-block">
-        <h1>OWN THE<br>GAME.</h1>
-        <p>Gør din trøjesamling digital. <br> 100% Autentisk. 100% Din.</p>
-      </div>
+    <div class="text-block">
+      <h1>OWN THE<br>GAME.</h1>
+      <p>Gør din trøjesamling digital. <br> 100% Autentisk. 100% Din.</p>
+    </div>
 
-      <!-- Glass Action Card -->
-      <div class="glass-card floating" @click="openCamera">
-        <div class="gc-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
-            <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
-            <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
-            <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
-            <rect x="7" y="7" width="10" height="10" rx="1"></rect>
-          </svg>
-        </div>
-        <div class="gc-text">
-          <span class="label">Har du en trøje?</span>
-          <span class="action">Scan og Validér</span>
-        </div>
-        <button class="gc-arrow">→</button>
+    <!-- Glass Action Card -->
+    <div class="glass-card floating" @click="openCamera">
+      <div class="gc-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
+          <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
+          <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
+          <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
+          <rect x="7" y="7" width="10" height="10" rx="1"></rect>
+        </svg>
       </div>
+      <div class="gc-text">
+        <span class="label">Har du en trøje?</span>
+        <span class="action">Scan og Validér</span>
+      </div>
+      <button class="gc-arrow">→</button>
     </div>
   </header>
 
@@ -167,7 +165,8 @@ onUnmounted(async () => {
   position: relative;
   display: grid;
   grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
-  align-content: end;
+  grid-template-rows: auto;
+  align-content: start;
   overflow: hidden;
 }
 
@@ -177,6 +176,7 @@ onUnmounted(async () => {
   background-image: url('/pics/image 19.JPG'); 
   background-size: cover;
   background-position: 70% bottom;
+  background-repeat: no-repeat;
   z-index: 0;
 }
 
@@ -191,19 +191,17 @@ onUnmounted(async () => {
   z-index: 1;
 }
 
-.hero-content {
+.text-block {
   grid-column: 2 / -2;
+  grid-row: 1;
   position: relative;
   z-index: 10;
-  margin-bottom: 6rem;
-}
-
-.text-block {
-  margin-bottom: 25rem;
+  padding-top: 2rem;
+  align-self: start;
 }
 
 .text-block h1 {
-  font-size: 3rem;
+  font-size: 4rem;
   line-height: 0.9;
   font-weight: 500;
   margin-bottom: 12px;
@@ -231,10 +229,17 @@ onUnmounted(async () => {
   gap: 16px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: fixed;
+  bottom: calc(75px + 1rem + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2 * var(--grid-margin));
+  max-width: calc(460px - 2 * var(--grid-margin));
+  z-index: 50;
 }
 
 .glass-card:hover {
-  transform: translateY(-2px);
+  transform: translate(-50%, -2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
@@ -425,6 +430,244 @@ onUnmounted(async () => {
   text-align: center;
   max-width: 80%;
   z-index: 1001;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 460px) {
+  .hero {
+    grid-template-columns: 1rem 1fr 1fr 1fr 1fr 1rem;
+    --grid-margin: 1rem;
+  }
+  
+  .hero-bg {
+    width: 100%;
+    background-position: 65% center;
+    background-size: cover;
+  }
+  
+  .text-block {
+    margin-top: 6rem;
+  }
+  
+  .text-block h1 {
+    font-size: 3.5rem;
+  }
+  
+  .text-block p {
+    font-size: 0.9375rem;
+    max-width: 85%;
+  }
+  
+  .glass-card {
+    padding: 12px 18px;
+    border-radius: 40px;
+    bottom: calc(70px + 1rem + env(safe-area-inset-bottom));
+    width: calc(100% - 2rem);
+    max-width: calc(460px - 2rem);
+  }
+  
+  .gc-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .gc-text .label {
+    font-size: 10px;
+  }
+  
+  .gc-text .action {
+    font-size: 14px;
+  }
+  
+  .gc-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+  
+  .scanning-frame {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .scanning-text {
+    font-size: 13px;
+    padding: 0.4rem 0.875rem;
+  }
+  
+  .close-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+  
+  .camera-controls {
+    padding: 1.5rem;
+  }
+  
+  .error-message {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.875rem;
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 375px) {
+  .hero {
+    grid-template-columns: 0.75rem 1fr 1fr 1fr 1fr 0.75rem;
+  }
+  
+  .hero-bg {
+    width: 100%;
+    background-position: 60% center;
+    background-size: cover;
+  }
+  
+  .text-block {
+    margin-top: 5.5rem;
+  }
+  
+  .text-block h1 {
+    font-size: 3.25rem;
+  }
+  
+  .text-block p {
+    font-size: 0.875rem;
+    max-width: 90%;
+  }
+  
+  .glass-card {
+    padding: 10px 16px;
+    border-radius: 35px;
+    bottom: calc(65px + 1rem + env(safe-area-inset-bottom));
+    width: calc(100% - 1.5rem);
+    max-width: calc(460px - 1.5rem);
+  }
+  
+  .gc-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .gc-text .label {
+    font-size: 9px;
+  }
+  
+  .gc-text .action {
+    font-size: 13px;
+  }
+  
+  .gc-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+  
+  .scanning-frame {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .scanning-text {
+    font-size: 12px;
+    padding: 0.375rem 0.75rem;
+    margin-top: 1.5rem;
+  }
+  
+  .close-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  .camera-controls {
+    padding: 1.25rem;
+  }
+  
+  .error-message {
+    padding: 0.75rem 1rem;
+    font-size: 0.8125rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 320px) {
+  .hero {
+    grid-template-columns: 0.5rem 1fr 1fr 1fr 1fr 0.5rem;
+  }
+  
+  .hero-bg {
+    width: 100%;
+    background-position: 55% center;
+    background-size: cover;
+  }
+  
+  .text-block {
+    margin-top: 5rem;
+  }
+  
+  .text-block h1 {
+    font-size: 3rem;
+  }
+  
+  .text-block p {
+    font-size: 0.8125rem;
+    max-width: 95%;
+  }
+  
+  .glass-card {
+    padding: 8px 14px;
+    border-radius: 30px;
+    bottom: calc(60px + 1rem + env(safe-area-inset-bottom));
+    width: calc(100% - 1rem);
+    max-width: calc(460px - 1rem);
+  }
+  
+  .gc-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .gc-text .label {
+    font-size: 8px;
+  }
+  
+  .gc-text .action {
+    font-size: 12px;
+  }
+  
+  .gc-arrow {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  
+  .scanning-frame {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .scanning-text {
+    font-size: 11px;
+    padding: 0.3rem 0.625rem;
+    margin-top: 1.25rem;
+  }
+  
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  
+  .camera-controls {
+    padding: 1rem;
+  }
+  
+  .error-message {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.75rem;
+    max-width: 95%;
+  }
 }
 </style>
 

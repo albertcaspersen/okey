@@ -27,7 +27,31 @@
       <!-- Box 2: Fan Score (Kvadratisk) -->
       <div class="box square fan-score-box">
         <span class="box-label">Fan Score</span>
-        <div class="minimal-score">
+        <div class="circular-progress">
+          <svg class="progress-ring" width="100" height="100">
+            <circle
+              class="progress-ring-background"
+              cx="50"
+              cy="50"
+              r="42"
+              fill="none"
+              stroke="rgba(0, 0, 0, 0.1)"
+              stroke-width="7"
+            />
+            <circle
+              class="progress-ring-circle"
+              cx="50"
+              cy="50"
+              r="42"
+              fill="none"
+              stroke="var(--neon)"
+              stroke-width="7"
+              stroke-linecap="round"
+              :stroke-dasharray="circumference"
+              :stroke-dashoffset="circumference - (85 / 100) * circumference"
+              transform="rotate(-90 50 50)"
+            />
+          </svg>
           <div class="score-display">85<span>%</span></div>
         </div>
       </div>
@@ -150,13 +174,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { loadThree } from './utils/threeLoader.js'
 
 const modelContainer = ref(null)
 let scene, camera, renderer, model, animationId, handleResize
 let THREE = null
 let GLTFLoader = null
+
+// Circular progress calculation
+const radius = 42
+const circumference = computed(() => 2 * Math.PI * radius)
 
 onMounted(async () => {
   // Load three.js fra lokal installation
@@ -296,11 +324,11 @@ onMounted(async () => {
       const size = box.getSize(new THREE.Vector3())
       
       const maxDim = Math.max(size.x, size.y, size.z)
-      const scale = 2.5 / maxDim
+      const scale = 2.2 / maxDim
       model.scale.multiplyScalar(scale)
       
-      model.position.x = -center.x * scale + 0.1 // Offset til højre
-      model.position.y = -center.y * scale
+      model.position.x = -center.x * scale + 1.7 // Offset til højre
+      model.position.y = -center.y * scale + 0.1 // Offset opad
       model.position.z = -center.z * scale
     },
     (progress) => {
@@ -403,7 +431,7 @@ onUnmounted(() => {
   margin-bottom: 0;
 }
 
-.box.wide { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: space-between; height: 22rem; position: relative; }
+.box.wide { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: space-between; height: 15rem; position: relative; }
 .box.square { grid-column: span 2; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
 /* Authentic Box specific */
@@ -462,25 +490,38 @@ onUnmounted(() => {
   position: relative;
 }
 
-.minimal-score {
+.circular-progress {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
+  position: relative;
+}
+
+.progress-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.5s ease-in-out;
 }
 
 .score-display {
-  font-size: 3.5rem;
+  font-size: 1.4rem;
   font-weight: 900;
   color: var(--neon);
   line-height: 1;
   font-variant-numeric: tabular-nums;
   position: relative;
+  z-index: 1;
 }
 
 .score-display span {
-  font-size: 1.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   opacity: 0.8;
   margin-left: 0.125rem;
@@ -778,7 +819,103 @@ onUnmounted(() => {
   text-align: center;
 }
 
-@media (max-width: 480px) {
+/* Responsive breakpoints */
+@media (max-width: 460px) {
+  .bento-section {
+    margin-top: 6rem;
+    grid-template-columns: 1rem 1fr 1fr 1fr 1fr 1rem;
+    --grid-margin: 1rem;
+  }
+  
+  .bento-section .section-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .grid-container {
+    gap: 0.5rem;
+  }
+  
+  .box {
+    padding: 0.875rem;
+    border-radius: 1rem;
+  }
+  
+  .box.wide {
+    height: 12rem;
+  }
+  
+  .box-content h3 {
+    font-size: 1rem;
+  }
+  
+  .box-content p {
+    font-size: 0.6875rem;
+  }
+  
+  .badge {
+    font-size: 0.5625rem;
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .player-name {
+    font-size: 0.5625rem;
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .live-indicator {
+    font-size: 0.5625rem;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+  
+  .score-display {
+    font-size: 1.2rem;
+  }
+  
+  .score-display span {
+    font-size: 0.625rem;
+  }
+  
+  .progress-ring {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .reward-icon {
+    font-size: 1.75rem;
+  }
+  
+  .reward-text {
+    font-size: 0.8125rem;
+  }
+  
+  .value-amount {
+    font-size: 1.25rem;
+  }
+  
+  .value-change {
+    font-size: 0.8125rem;
+  }
+  
+  .offers-count {
+    font-size: 1.75rem;
+  }
+  
+  .box.market-value,
+  .box.offers {
+    min-height: 6rem;
+    padding: 1rem;
+  }
+  
+  .rewards-section {
+    grid-template-columns: 1rem 1fr 1fr 1fr 1fr 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.75rem;
+  }
+  
   .score-value {
     font-size: 3rem;
   }
@@ -787,8 +924,199 @@ onUnmounted(() => {
     padding: 1.5rem;
   }
   
+  .logo-bg img {
+    width: 150px;
+  }
+  
+  .btn-leaderboard,
+  .btn-history {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+  
+  .raffle-card {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+  
+  .raffle-icon {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .raffle-content h4 {
+    font-size: 0.9375rem;
+  }
+  
+  .raffle-content p {
+    font-size: 0.8125rem;
+  }
+  
+  .btn-participate {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+  }
+  
   .badges-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .badge-card {
+    padding: 1.25rem;
+  }
+  
+  .badge-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .badge-name {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .bento-section {
+    grid-template-columns: 0.75rem 1fr 1fr 1fr 1fr 0.75rem;
+    margin-top: 5.5rem;
+  }
+  
+  .bento-section .section-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .grid-container {
+    gap: 0.5rem;
+  }
+  
+  .box {
+    padding: 0.75rem;
+  }
+  
+  .box.wide {
+    height: 11rem;
+  }
+  
+  .box-content h3 {
+    font-size: 0.9375rem;
+  }
+  
+  .box-content p {
+    font-size: 0.625rem;
+  }
+  
+  .score-display {
+    font-size: 1.1rem;
+  }
+  
+  .progress-ring {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .rewards-section {
+    grid-template-columns: 0.75rem 1fr 1fr 1fr 1fr 0.75rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .score-value {
+    font-size: 2.5rem;
+  }
+  
+  .total-score-card {
+    padding: 1.25rem;
+  }
+  
+  .logo-bg img {
+    width: 120px;
+  }
+  
+  .badges-grid {
+    gap: 0.5rem;
+  }
+  
+  .badge-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .bento-section {
+    grid-template-columns: 0.5rem 1fr 1fr 1fr 1fr 0.5rem;
+    margin-top: 5rem;
+  }
+  
+  .bento-section .section-header h2 {
+    font-size: 1.375rem;
+  }
+  
+  .box {
+    padding: 0.625rem;
+    border-radius: 0.875rem;
+  }
+  
+  .box.wide {
+    height: 10rem;
+  }
+  
+  .box-content h3 {
+    font-size: 0.875rem;
+  }
+  
+  .box-content p {
+    font-size: 0.5625rem;
+  }
+  
+  .score-display {
+    font-size: 1rem;
+  }
+  
+  .progress-ring {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .rewards-section {
+    grid-template-columns: 0.5rem 1fr 1fr 1fr 1fr 0.5rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.375rem;
+  }
+  
+  .score-value {
+    font-size: 2.25rem;
+  }
+  
+  .total-score-card {
+    padding: 1rem;
+  }
+  
+  .btn-leaderboard,
+  .btn-history {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .badges-grid {
+    gap: 0.375rem;
+  }
+  
+  .badge-card {
+    padding: 0.875rem;
+  }
+  
+  .badge-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .badge-name {
+    font-size: 0.75rem;
   }
 }
 </style>
