@@ -7,7 +7,7 @@
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
       </button>
-      <h1 class="nav-title">Højlund Signed Game Jersey</h1>
+      <h1 class="nav-title">Høgsberg Signed Game Jersey</h1>
       <button class="nav-search">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>

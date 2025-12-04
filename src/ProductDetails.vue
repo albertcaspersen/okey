@@ -197,7 +197,7 @@ const product = ref(props.productData || {
   offers: 3,
   highestOffer: 1100,
   club: 'FC Nordsjælland',
-  player: 'R. Højlund',
+  player: 'L. Høgsberg',
   number: 9,
   size: 'L',
   history: [

@@ -11,7 +11,7 @@
       <div class="box wide glow-effect" @click="openProductDetails()" style="cursor: pointer;">
         <div class="badge-container">
           <div class="badge">Officiel Ejer</div>
-          <div class="player-name">R. HØJLUND</div>
+          <div class="player-name">L. HØGSBERG</div>
         </div>
         <span class="live-indicator">● LIVE</span>
         <div class="box-content">
