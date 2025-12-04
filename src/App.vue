@@ -121,7 +121,7 @@ const activeNav = ref('scan')
   top: 0;
   left: 0;
   width: 100%;
-  padding-top: 48px; 
+  padding-top: 28px; 
   display: grid;
   grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
   align-items: center;

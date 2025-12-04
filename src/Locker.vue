@@ -203,7 +203,7 @@ onUnmounted(() => {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
-  margin-top: 7rem;
+  margin-top: 5rem;
   margin-bottom: 0;
   padding-bottom: 0;
 }
