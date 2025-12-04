@@ -4,10 +4,9 @@
   box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
-
+html,
 body {
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Stack Sans Text', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body.no-scroll {

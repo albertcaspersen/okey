@@ -23,7 +23,7 @@
         </div>
         <div class="gc-text">
           <span class="label">Har du en trøje?</span>
-          <span class="action">Scan & Validér</span>
+          <span class="action">Scan og Validér</span>
         </div>
         <button class="gc-arrow">→</button>
       </div>
@@ -248,6 +248,7 @@ onUnmounted(async () => {
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   color: var(--neon);
+  transform: translateX(-6px);
 }
 
 .gc-text { display: flex; flex-direction: column; flex: 1; }

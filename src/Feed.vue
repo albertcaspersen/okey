@@ -2,7 +2,7 @@
   <!-- FC NORDSJÆLLAND FEED -->
   <section class="feed-section">
     <div class="section-header">
-      <h2><span class="welcome-text">Velkommen</span><br>Frederik</h2>
+      <h2><span class="welcome-text">Velkommen</span><br>Sebastian R.</h2>
     </div>
 
     <!-- Feed Posts -->
@@ -105,13 +105,14 @@
 
 .section-header h2 {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-main);
 }
 
 .welcome-text {
   color: var(--text-muted);
   font-weight: 400;
+  font-size: 1.2rem;
 }
 
 .feed-container {

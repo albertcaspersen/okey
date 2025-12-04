@@ -37,7 +37,7 @@ onUnmounted(() => {
         <img src="/logo.svg" alt="Logo" />
       </div>
       <div class="profile-picture" @click="activeNav = 'profile'">
-        <img src="/profile-fan.jpg" alt="Profil" />
+        <img src="/profile-fan.png" alt="Profil" />
       </div>
     </nav>
 
@@ -123,7 +123,7 @@ onUnmounted(() => {
   --text-muted: #666666;
   --grid-margin: 20px; /* Margin left/right for grid */
   
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Stack Sans Text', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-main);
   min-height: 100vh;
@@ -190,6 +190,8 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  transform: scale(1.2);
   display: block;
 }
 

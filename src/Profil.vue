@@ -3,9 +3,9 @@
     <!-- Profile Header -->
     <div class="profile-header">
       <div class="profile-picture-container">
-        <img src="/profile-fan.jpg" alt="Profil" class="profile-picture" />
+        <img src="/profile-fan.png" alt="Profil" class="profile-picture" />
       </div>
-      <h1 class="profile-name">Asger Fan</h1>
+      <h1 class="profile-name">Sebastian R.</h1>
       <p class="profile-subtitle">FCN-fan siden 2018</p>
     </div>
 
@@ -103,6 +103,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  transform: scale(1.6);
   display: block;
 }
 

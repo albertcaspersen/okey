@@ -25,14 +25,10 @@
       </div>
 
       <!-- Box 2: Fan Score (Kvadratisk) -->
-      <div class="box square">
+      <div class="box square fan-score-box">
         <span class="box-label">Fan Score</span>
-        <div class="chart-container">
-          <svg viewBox="0 0 36 36" class="circular-chart">
-            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-            <path class="circle" stroke-dasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-          </svg>
-          <span class="score-text">85<small>%</small></span>
+        <div class="minimal-score">
+          <div class="score-display">85<span>%</span></div>
         </div>
       </div>
 
@@ -300,10 +296,10 @@ onMounted(async () => {
       const size = box.getSize(new THREE.Vector3())
       
       const maxDim = Math.max(size.x, size.y, size.z)
-      const scale = 3 / maxDim
+      const scale = 2.5 / maxDim
       model.scale.multiplyScalar(scale)
       
-      model.position.x = -center.x * scale + 2 // Offset til højre
+      model.position.x = -center.x * scale + 0.1 // Offset til højre
       model.position.y = -center.y * scale
       model.position.z = -center.z * scale
     },
@@ -373,7 +369,7 @@ onUnmounted(() => {
 }
 .bento-section .section-header h2 { 
     font-size: 2rem; 
-    font-weight: 500;
+    font-weight: 400;
     margin-bottom: 1rem;
 }
 .live-indicator { 
@@ -407,7 +403,7 @@ onUnmounted(() => {
   margin-bottom: 0;
 }
 
-.box.wide { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: space-between; height: 14rem; position: relative; }
+.box.wide { grid-column: 1 / -1; display: flex; flex-direction: column; justify-content: space-between; height: 22rem; position: relative; }
 .box.square { grid-column: span 2; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
 /* Authentic Box specific */
@@ -458,12 +454,37 @@ onUnmounted(() => {
 
 /* Fan Score specific */
 .box-label { position: absolute; top: 1rem; left: 1rem; font-size: 0.6875rem; color: var(--text-muted); }
-.chart-container { position: relative; width: 4.375rem; height: 4.375rem; display: flex; align-items: center; justify-content: center; }
-.circular-chart { width: 100%; height: 100%; transform: rotate(-90deg); }
-.circle-bg { fill: none; stroke: rgba(0, 0, 0, 0.1); stroke-width: 0.1875rem; }
-.circle { fill: none; stroke: var(--neon); stroke-width: 0.1875rem; stroke-linecap: round; }
-.score-text { position: absolute; font-weight: 700; font-size: 1rem; color: var(--text-main); }
-.score-text small { font-size: 0.625rem; opacity: 0.7; }
+
+.fan-score-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.minimal-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.score-display {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--neon);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+}
+
+.score-display span {
+  font-size: 1.75rem;
+  font-weight: 700;
+  opacity: 0.8;
+  margin-left: 0.125rem;
+}
 
 /* Rewards specific */
 .reward-icon { font-size: 2rem; margin-bottom: 0.25rem; }
