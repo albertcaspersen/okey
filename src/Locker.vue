@@ -60,7 +60,7 @@
       <div class="box square reward-box">
         <span class="box-label">Rewards</span>
         <div class="reward-icon">🎟️</div>
-        <div class="reward-text">+3 Fadøl</div>
+        <div class="reward-text">+2 Fadøl</div>
       </div>
 
       <!-- Box 4: Market Value -->
@@ -1112,10 +1112,29 @@ onUnmounted(() => {
   }
 }
 
+/* iPhone 15 specific (393px) - Ensure fan-score-box matches reward-box height */
+@media (max-width: 393px) {
+  .box.square {
+    aspect-ratio: 1;
+    min-height: 0;
+  }
+  
+  .fan-score-box {
+    aspect-ratio: 1;
+    min-height: 0;
+  }
+  
+  .circular-progress {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+  }
+}
+
 @media (max-width: 320px) {
   .bento-section {
     grid-template-columns: 0.5rem 1fr 1fr 1fr 1fr 0.5rem;
-    margin-top: 5rem;
+    margin-top: 0rem;
   }
   
   .bento-section .section-header h2 {
