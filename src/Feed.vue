@@ -23,10 +23,10 @@
       <!-- Post 2 -->
       <article class="feed-post">
         <div class="post-image">
-          <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&q=80" alt="Træning" class="feed-image" />
+          <img :src="winterOfferImage" alt="Træning" class="feed-image" />
           <div class="post-badge">OFFER</div>
           <div class="post-text-overlay">
-            <h3>20% på halsedisse</h3>
+            <h3>20% på caps og beanies</h3>
             <p>Kun for O-KEY medlemmer</p>
           </div>
         </div>
@@ -35,7 +35,7 @@
       <!-- Post 3 -->
       <article class="feed-post">
         <div class="post-image">
-          <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80" alt="Spiller" class="feed-image" />
+          <img :src="nySpillerImage" alt="Spiller" class="feed-image" />
           <div class="post-badge">NEWS</div>
           <div class="post-text-overlay">
             <h3>Ny spiller præsenteret!</h3>
@@ -47,7 +47,7 @@
       <!-- Post 4 -->
       <article class="feed-post">
         <div class="post-image">
-          <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800&q=80" alt="Kampdag" class="feed-image" />
+          <img :src="komStoetImage" alt="Kampdag" class="feed-image" />
           <div class="post-badge">MATCH</div>
           <div class="post-text-overlay">
             <h3>Kampdag!</h3>
@@ -59,10 +59,10 @@
       <!-- Post 5 -->
       <article class="feed-post">
         <div class="post-image">
-          <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80" alt="Målscene" class="feed-image" />
+          <img :src="highlightImage" alt="Målscene" class="feed-image" />
           <div class="post-badge">HIGHLIGHT</div>
           <div class="post-text-overlay">
-            <h3>Målscenen!</h3>
+            <h3>Highlights!</h3>
             <p>Se højdepunktet fra kampen</p>
           </div>
         </div>
@@ -73,6 +73,11 @@
 </template>
 
 <script setup>
+import winterOfferImage from '../pics/winter_offer.jpg'
+import nySpillerImage from '../pics/ny_spiller.jpg'
+import komStoetImage from '../pics/kom_stoet.jpg'
+import highlightImage from '../pics/highlight.jpg'
+
 // Feed component - can be extended with API calls to fetch real FC Nordsjælland content
 </script>
 
