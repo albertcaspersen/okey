@@ -154,24 +154,31 @@ onUnmounted(() => {
 <style>
 /* Global CSS Variable for bottom-nav height - calculated as: top padding + nav-item height + bottom padding + safe area */
 :root {
-  --bottom-nav-height: calc(10px + 51px + 10px + env(safe-area-inset-bottom)); /* 10px top + nav-item (~51px: 7px+22px+3px+13px+7px) + 10px bottom + safe area */
+  --bottom-nav-height: calc(6px + 51px + 6px + env(safe-area-inset-bottom)); /* 6px top + nav-item (~51px: 7px+22px+3px+13px+7px) + 6px bottom + safe area */
 }
 
 @media (max-width: 460px) {
   :root {
-    --bottom-nav-height: calc(10px + 50px + 10px + env(safe-area-inset-bottom)); /* 10px top + nav-item (~50px) + 10px bottom + safe area */
+    --bottom-nav-height: calc(6px + 50px + 6px + env(safe-area-inset-bottom)); /* 6px top + nav-item (~50px) + 6px bottom + safe area */
+  }
+}
+
+/* iPhone 15 specific (393px) */
+@media (max-width: 393px) {
+  :root {
+    --bottom-nav-height: calc(4px + 36px + 2px + env(safe-area-inset-bottom)); /* 4px top + nav-item (~36px) + 2px bottom + safe area */
   }
 }
 
 @media (max-width: 375px) {
   :root {
-    --bottom-nav-height: calc(12px + 56px + 12px + env(safe-area-inset-bottom)); /* 12px top + nav-item (~56px) + 12px bottom + safe area */
+    --bottom-nav-height: calc(8px + 56px + 8px + env(safe-area-inset-bottom)); /* 8px top + nav-item (~56px) + 8px bottom + safe area */
   }
 }
 
 @media (max-width: 320px) {
   :root {
-    --bottom-nav-height: calc(12px + 54px + 12px + env(safe-area-inset-bottom)); /* 12px top + nav-item (~54px) + 12px bottom + safe area */
+    --bottom-nav-height: calc(8px + 54px + 8px + env(safe-area-inset-bottom)); /* 8px top + nav-item (~54px) + 8px bottom + safe area */
   }
 }
 </style>
@@ -266,7 +273,7 @@ onUnmounted(() => {
 /* --- BOTTOM NAVIGATION --- */
 .spacer { 
   grid-column: 1 / -1;
-  height: 80px; 
+  height: 70px; 
 }
 
 .bottom-nav {
@@ -283,8 +290,9 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
   align-items: center;
-  padding: 10px 0;
-  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  justify-items: center;
+  padding: 6px 0;
+  padding-bottom: calc(6px + env(safe-area-inset-bottom));
   padding-left: calc(0px + env(safe-area-inset-left));
   padding-right: calc(0px + env(safe-area-inset-right));
   z-index: 100;
@@ -304,15 +312,22 @@ onUnmounted(() => {
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.nav-item:nth-child(1) { grid-column: 2; }
-.nav-item:nth-child(2) { grid-column: 3; }
-.nav-item:nth-child(3) { grid-column: 4; }
-.nav-item:nth-child(4) { grid-column: 5; }
+.nav-item:nth-child(1) { grid-column: 2; justify-self: center; }
+.nav-item:nth-child(2) { grid-column: 3; justify-self: center; }
+.nav-item:nth-child(3) { grid-column: 4; justify-self: center; }
+.nav-item:nth-child(4) { grid-column: 5; justify-self: center; }
 
 .nav-item svg {
   transition: all 0.2s ease;
+  display: block;
+  margin: 0 auto;
+  flex-shrink: 0;
+
 }
 
 .nav-item span {
@@ -321,6 +336,8 @@ onUnmounted(() => {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   transition: all 0.2s ease;
+  text-align: center;
+  width: 100%;
 }
 
 .nav-item.active {
@@ -355,8 +372,8 @@ onUnmounted(() => {
   }
   
   .bottom-nav {
-    padding: 10px 0;
-    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    padding: 6px 0;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom));
   }
   
   .nav-item {
@@ -374,7 +391,35 @@ onUnmounted(() => {
   }
   
   .spacer {
-    height: 78px;
+    height: 68px;
+  }
+}
+
+/* iPhone 15 specific (393px) */
+@media (max-width: 393px) {
+  .bottom-nav {
+    padding-top: 18px;
+    padding-bottom: calc(-10px + env(safe-area-inset-bottom));
+    align-items: center;
+  }
+  
+  .nav-item {
+    padding: 4px 0 0px 0px;
+    gap: 1px;
+  }
+  
+  .nav-item svg {
+    width: 20px;
+    height: 20px;
+
+  }
+  
+  .nav-item span {
+    font-size: 9px;
+  }
+  
+  .spacer {
+    height: 46px;
   }
 }
 
@@ -397,8 +442,8 @@ onUnmounted(() => {
   }
   
   .bottom-nav {
-    padding: 12px 0;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    padding: 8px 0;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
   }
   
   .nav-item {
@@ -416,7 +461,7 @@ onUnmounted(() => {
   }
   
   .spacer {
-    height: 88px;
+    height: 78px;
   }
 }
 
@@ -440,8 +485,8 @@ onUnmounted(() => {
   }
   
   .bottom-nav {
-    padding: 12px 0;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    padding: 8px 0;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
   }
   
   .nav-item {
@@ -459,7 +504,7 @@ onUnmounted(() => {
   }
   
   .spacer {
-    height: 86px;
+    height: 76px;
   }
 }
 </style>

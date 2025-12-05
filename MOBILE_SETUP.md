@@ -7,6 +7,55 @@
 
 ---
 
+## 🌐 Tilgå localhost fra mobilen (Web-udvikling)
+
+Hvis du vil teste din app i browseren på mobilen mens du udvikler:
+
+### Trin 1: Start dev serveren
+
+```bash
+npm run dev
+```
+
+Du vil se noget lignende:
+```
+  VITE v5.x.x  ready in xxx ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.x.x:5173/
+```
+
+### Trin 2: Find din Mac's IP-adresse
+
+**Metode 1 - Fra terminalen:**
+```bash
+ipconfig getifaddr en0
+```
+
+**Metode 2 - Fra Systemindstillinger:**
+- Åbn **Systemindstillinger → Netværk**
+- Vælg dit WiFi netværk
+- Se IP-adressen (fx `192.168.1.100`)
+
+### Trin 3: Åbn på mobilen
+
+1. **Sørg for at mobilen er på samme WiFi netværk som din Mac**
+
+2. **Åbn browseren på mobilen** og gå til:
+   ```
+   http://[DIN-IP-ADRESSE]:5173
+   ```
+   Fx: `http://192.168.1.100:5173`
+
+3. **Appen skulle nu loade på mobilen!** 🎉
+
+### Tips:
+- Hvis det ikke virker, tjek at din Mac's firewall tillader indkommende forbindelser
+- Du kan også bruge den "Network" URL som Vite viser i terminalen
+- Ændringer i koden opdateres automatisk på mobilen (hot reload)
+
+---
+
 ## 📱 iOS - Få appen på iPhone/iPad
 
 ### Metode 1: iOS Simulator (hurtigste vej)
