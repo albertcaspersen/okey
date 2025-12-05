@@ -111,7 +111,7 @@
         </svg>
         <h3>Aktive Raffles</h3>
       </div>
-      <div class="raffle-card">
+      <div class="raffle-card" :style="{ backgroundImage: `url(${signedBallImage})` }">
         <div class="raffle-icon">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
@@ -146,7 +146,28 @@
         <div class="badge-card">
           <div class="badge-icon">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 12h20M12 2v20M17 7l-5-5-5 5M17 17l-5 5-5-5"></path>
+              <!-- 6 hovedgrene -->
+              <line x1="12" y1="2" x2="12" y2="22"></line>
+              <line x1="3.5" y1="7" x2="20.5" y2="17"></line>
+              <line x1="20.5" y1="7" x2="3.5" y2="17"></line>
+              <!-- Arme på vertikal gren (top) -->
+              <line x1="12" y1="5" x2="9.5" y2="3.5"></line>
+              <line x1="12" y1="5" x2="14.5" y2="3.5"></line>
+              <!-- Arme på vertikal gren (bund) -->
+              <line x1="12" y1="19" x2="9.5" y2="20.5"></line>
+              <line x1="12" y1="19" x2="14.5" y2="20.5"></line>
+              <!-- Arme på øvre venstre gren -->
+              <line x1="6" y1="8.5" x2="5" y2="6.5"></line>
+              <line x1="6" y1="8.5" x2="4" y2="9.5"></line>
+              <!-- Arme på øvre højre gren -->
+              <line x1="18" y1="8.5" x2="19" y2="6.5"></line>
+              <line x1="18" y1="8.5" x2="20" y2="9.5"></line>
+              <!-- Arme på nedre venstre gren -->
+              <line x1="6" y1="15.5" x2="4" y2="14.5"></line>
+              <line x1="6" y1="15.5" x2="5" y2="17.5"></line>
+              <!-- Arme på nedre højre gren -->
+              <line x1="18" y1="15.5" x2="20" y2="14.5"></line>
+              <line x1="18" y1="15.5" x2="19" y2="17.5"></line>
             </svg>
           </div>
           <span class="badge-name">Winter Warrior</span>
@@ -176,6 +197,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed, inject } from 'vue'
 import { loadThree } from './utils/threeLoader.js'
+import signedBallImage from '../pics/signed_ball.jpg'
 
 // Inject the openProductDetails function from parent
 const openProductDetails = inject('openProductDetails', () => {})
@@ -735,14 +757,33 @@ onUnmounted(() => {
 }
 
 .raffle-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border: 1px solid var(--glass-border);
   border-radius: 1.25rem;
   padding: 1.25rem;
   display: flex;
   align-items: center;
   gap: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.raffle-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.raffle-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .raffle-icon {
@@ -769,13 +810,13 @@ onUnmounted(() => {
 .raffle-content h4 {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: rgb(255, 255, 255);
   margin-bottom: 0.25rem;
 }
 
 .raffle-content p {
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: rgb(216, 216, 216);
 }
 
 .btn-participate {
