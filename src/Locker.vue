@@ -60,7 +60,7 @@
       <div class="box square reward-box">
         <span class="box-label">Rewards</span>
         <div class="reward-icon">🎟️</div>
-        <div class="reward-text">+2 Tickets</div>
+        <div class="reward-text">+2 Fadøl</div>
       </div>
 
       <!-- Box 4: Market Value -->
@@ -349,7 +349,7 @@ onMounted(async () => {
       const size = box.getSize(new THREE.Vector3())
       
       const maxDim = Math.max(size.x, size.y, size.z)
-      const scale = 2.2 / maxDim
+      const scale = 2.5 / maxDim
       model.scale.multiplyScalar(scale)
       
       model.position.x = -center.x * scale + 1.7 // Offset til højre
