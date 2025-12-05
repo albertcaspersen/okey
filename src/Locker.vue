@@ -60,7 +60,7 @@
       <div class="box square reward-box">
         <span class="box-label">Rewards</span>
         <div class="reward-icon">🎟️</div>
-        <div class="reward-text">+2 Fadøl</div>
+        <div class="reward-text">+3 Fadøl</div>
       </div>
 
       <!-- Box 4: Market Value -->
