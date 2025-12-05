@@ -151,6 +151,31 @@ onUnmounted(() => {
   </main>
 </template>
 
+<style>
+/* Global CSS Variable for bottom-nav height - calculated as: top padding + nav-item height + bottom padding + safe area */
+:root {
+  --bottom-nav-height: calc(10px + 51px + 10px + env(safe-area-inset-bottom)); /* 10px top + nav-item (~51px: 7px+22px+3px+13px+7px) + 10px bottom + safe area */
+}
+
+@media (max-width: 460px) {
+  :root {
+    --bottom-nav-height: calc(10px + 50px + 10px + env(safe-area-inset-bottom)); /* 10px top + nav-item (~50px) + 10px bottom + safe area */
+  }
+}
+
+@media (max-width: 375px) {
+  :root {
+    --bottom-nav-height: calc(12px + 56px + 12px + env(safe-area-inset-bottom)); /* 12px top + nav-item (~56px) + 12px bottom + safe area */
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    --bottom-nav-height: calc(12px + 54px + 12px + env(safe-area-inset-bottom)); /* 12px top + nav-item (~54px) + 12px bottom + safe area */
+  }
+}
+</style>
+
 <style scoped>
 /* --- VARIABLER --- */
 .mobile-wrapper {
@@ -241,7 +266,7 @@ onUnmounted(() => {
 /* --- BOTTOM NAVIGATION --- */
 .spacer { 
   grid-column: 1 / -1;
-  height: 75px; 
+  height: 80px; 
 }
 
 .bottom-nav {
@@ -258,13 +283,12 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
   align-items: center;
-  padding: 8px 0;
-  padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  padding: 10px 0;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
   padding-left: calc(0px + env(safe-area-inset-left));
   padding-right: calc(0px + env(safe-area-inset-right));
   z-index: 100;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-  
 }
 
 .nav-item {
@@ -276,7 +300,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   gap: 3px;
-  padding: 6px 0;
+  padding: 7px 0;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -331,25 +355,26 @@ onUnmounted(() => {
   }
   
   .bottom-nav {
-    padding: 6px 0;
+    padding: 10px 0;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
   }
   
   .nav-item {
-    padding: 5px 0;
-    gap: 2px;
+    padding: 8px 0;
+    gap: 4px;
   }
   
   .nav-item svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
   }
   
   .nav-item span {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   .spacer {
-    height: 70px;
+    height: 78px;
   }
 }
 
@@ -372,25 +397,26 @@ onUnmounted(() => {
   }
   
   .bottom-nav {
-    padding: 5px 0;
+    padding: 12px 0;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
   }
   
   .nav-item {
-    padding: 4px 0;
-    gap: 2px;
+    padding: 10px 0;
+    gap: 5px;
   }
   
   .nav-item svg {
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
   }
   
   .nav-item span {
-    font-size: 8px;
+    font-size: 11px;
   }
   
   .spacer {
-    height: 65px;
+    height: 88px;
   }
 }
 
@@ -414,25 +440,26 @@ onUnmounted(() => {
   }
   
   .bottom-nav {
-    padding: 4px 0;
+    padding: 12px 0;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
   }
   
   .nav-item {
-    padding: 3px 0;
-    gap: 1px;
+    padding: 10px 0;
+    gap: 5px;
   }
   
   .nav-item svg {
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
   }
   
   .nav-item span {
-    font-size: 7px;
+    font-size: 10px;
   }
   
   .spacer {
-    height: 60px;
+    height: 86px;
   }
 }
 </style>

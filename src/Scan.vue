@@ -234,7 +234,7 @@ onUnmounted(async () => {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: fixed;
-  bottom: calc(75px + 1rem + env(safe-area-inset-bottom));
+  bottom: calc(var(--bottom-nav-height) + 1rem);
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 2 * var(--grid-margin));
@@ -461,7 +461,7 @@ onUnmounted(async () => {
   .glass-card {
     padding: 12px 18px;
     border-radius: 40px;
-    bottom: calc(70px + 1rem + env(safe-area-inset-bottom));
+    bottom: calc(var(--bottom-nav-height) + 1rem);
     width: calc(100% - 2rem);
     max-width: calc(460px - 2rem);
   }
@@ -534,7 +534,7 @@ onUnmounted(async () => {
   .glass-card {
     padding: 10px 16px;
     border-radius: 35px;
-    bottom: calc(65px + 1rem + env(safe-area-inset-bottom));
+    bottom: calc(var(--bottom-nav-height) + 1rem);
     width: calc(100% - 1.5rem);
     max-width: calc(460px - 1.5rem);
   }
@@ -614,7 +614,7 @@ onUnmounted(async () => {
   .glass-card {
     padding: 8px 14px;
     border-radius: 30px;
-    bottom: calc(60px + 1rem + env(safe-area-inset-bottom));
+    bottom: calc(var(--bottom-nav-height) + 1rem);
     width: calc(100% - 1rem);
     max-width: calc(460px - 1rem);
   }
