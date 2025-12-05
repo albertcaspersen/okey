@@ -67,18 +67,23 @@ const openCamera = async () => {
     
     if (!qrScannerContainer.value) return
     
+    // Calculate responsive QR box size (60% of viewport width, max 300px)
+    const viewportWidth = window.innerWidth
+    const qrBoxSize = Math.min(Math.floor(viewportWidth * 0.6), 300)
+    
     // Initialize QR code scanner
     html5QrCode = new Html5Qrcode(qrScannerContainer.value.id)
     
-    // Start scanning
+    // Start scanning with improved settings
     await html5QrCode.start(
       {
         facingMode: 'environment' // Use back camera on mobile
       },
       {
-        fps: 10, // Frames per second
-        qrbox: { width: 250, height: 250 }, // Scanning area
-        aspectRatio: 1.0
+        fps: 30, // Increased FPS for better scanning
+        qrbox: { width: qrBoxSize, height: qrBoxSize }, // Responsive scanning area
+        aspectRatio: 1.0,
+        disableFlip: false // Allow rotation
       },
       (decodedText, decodedResult) => {
         // QR code detected - show authenticated screen
@@ -315,8 +320,8 @@ onUnmounted(async () => {
 }
 
 .scanning-frame {
-  width: 250px;
-  height: 250px;
+  width: min(60vw, 300px);
+  height: min(60vw, 300px);
   border: 2px solid #E42223;
   border-radius: 12px;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
@@ -476,8 +481,8 @@ onUnmounted(async () => {
   }
   
   .scanning-frame {
-    width: 220px;
-    height: 220px;
+    width: min(60vw, 280px);
+    height: min(60vw, 280px);
   }
   
   .scanning-text {
@@ -555,8 +560,8 @@ onUnmounted(async () => {
   }
   
   .scanning-frame {
-    width: 200px;
-    height: 200px;
+    width: min(60vw, 260px);
+    height: min(60vw, 260px);
   }
   
   .scanning-text {
@@ -629,8 +634,8 @@ onUnmounted(async () => {
   }
   
   .scanning-frame {
-    width: 180px;
-    height: 180px;
+    width: min(60vw, 240px);
+    height: min(60vw, 240px);
   }
   
   .scanning-text {

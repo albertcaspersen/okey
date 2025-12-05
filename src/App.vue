@@ -166,12 +166,16 @@ onUnmounted(() => {
   background-color: var(--bg-color);
   color: var(--text-main);
   min-height: 100vh;
+  min-height: -webkit-fill-available; /* iOS Safari fix */
   width: 100%;
   max-width: 460px; /* Responsiv op til 460px */
   margin: 0 auto;
   position: relative;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  /* Support for safe areas */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 .mobile-wrapper.no-scroll {
@@ -190,7 +194,7 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   width: 100%;
-  padding-top: 28px; 
+  padding-top: calc(28px + env(safe-area-inset-top)); 
   display: grid;
   grid-template-columns: var(--grid-margin) 1fr 1fr 1fr 1fr var(--grid-margin);
   align-items: center;
@@ -256,6 +260,8 @@ onUnmounted(() => {
   align-items: center;
   padding: 8px 0;
   padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  padding-left: calc(0px + env(safe-area-inset-left));
+  padding-right: calc(0px + env(safe-area-inset-right));
   z-index: 100;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
   
