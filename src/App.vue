@@ -13,6 +13,74 @@ const activeNav = ref('scan')
 const showProductDetails = ref(false)
 const selectedProduct = ref(null)
 
+// PWA Installation prompt
+const showInstallPrompt = ref(false)
+const deferredPrompt = ref(null)
+const isInstalled = ref(false)
+
+// Check if app is already installed
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+  isInstalled.value = true
+}
+
+// Listen for beforeinstallprompt event (Android)
+onMounted(() => {
+  if (activeNav.value === 'scan') {
+    document.body.classList.add('no-scroll')
+  }
+
+  // Check if already installed
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+    isInstalled.value = true
+    return
+  }
+
+  // Listen for install prompt
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault()
+    deferredPrompt.value = e
+    // Show prompt after a delay (better UX) if not dismissed
+    if (!sessionStorage.getItem('pwa-install-dismissed')) {
+      setTimeout(() => {
+        if (!isInstalled.value) {
+          showInstallPrompt.value = true
+        }
+      }, 3000)
+    }
+  })
+
+  // Listen for app installed event
+  window.addEventListener('appinstalled', () => {
+    isInstalled.value = true
+    showInstallPrompt.value = false
+    deferredPrompt.value = null
+  })
+})
+
+const installApp = async () => {
+  if (!deferredPrompt.value) {
+    // Fallback: Show instructions
+    alert('Åbn menu (tre prikker) → "Tilføj til startskærm" eller "Install app"')
+    return
+  }
+
+  deferredPrompt.value.prompt()
+  const { outcome } = await deferredPrompt.value.userChoice
+  
+  if (outcome === 'accepted') {
+    isInstalled.value = true
+  }
+  
+  showInstallPrompt.value = false
+  deferredPrompt.value = null
+}
+
+const dismissInstallPrompt = () => {
+  showInstallPrompt.value = false
+  // Don't show again for this session
+  sessionStorage.setItem('pwa-install-dismissed', 'true')
+}
+
 const openProductDetails = (product = null) => {
   selectedProduct.value = product
   showProductDetails.value = true
@@ -46,11 +114,6 @@ watch(showProductDetails, (newVal) => {
   }
 })
 
-onMounted(() => {
-  if (activeNav.value === 'scan') {
-    document.body.classList.add('no-scroll')
-  }
-})
 
 onUnmounted(() => {
   document.body.classList.remove('no-scroll')
@@ -94,6 +157,19 @@ onUnmounted(() => {
 
     <!-- SPACER for at bottom nav ikke dækker -->
     <div v-if="!showProductDetails" class="spacer"></div>
+
+    <!-- PWA INSTALL PROMPT -->
+    <div v-if="showInstallPrompt && !isInstalled && !showProductDetails" class="install-prompt">
+      <div class="install-prompt-content">
+        <div class="install-prompt-icon">📱</div>
+        <div class="install-prompt-text">
+          <strong>Installer Okey App</strong>
+          <span>Få hurtigere adgang og offline support</span>
+        </div>
+        <button @click="installApp" class="install-btn">Installer</button>
+        <button @click="dismissInstallPrompt" class="dismiss-btn">×</button>
+      </div>
+    </div>
 
     <!-- BOTTOM NAVIGATION BAR -->
     <nav v-if="!showProductDetails" class="bottom-nav">
@@ -505,6 +581,134 @@ onUnmounted(() => {
   
   .spacer {
     height: 76px;
+  }
+}
+
+/* --- PWA INSTALL PROMPT --- */
+.install-prompt {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-height) + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 420px;
+  z-index: 99;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.install-prompt-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.install-prompt-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.install-prompt-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.install-prompt-text strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.install-prompt-text span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.install-btn {
+  background: var(--neon);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  font-family: inherit;
+}
+
+.install-btn:hover {
+  background: #c01d1e;
+  transform: scale(1.05);
+}
+
+.install-btn:active {
+  transform: scale(0.98);
+}
+
+.dismiss-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  line-height: 1;
+  padding: 0;
+}
+
+.dismiss-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+}
+
+@media (max-width: 460px) {
+  .install-prompt {
+    width: calc(100% - 32px);
+    bottom: calc(var(--bottom-nav-height) + 8px);
+  }
+  
+  .install-prompt-content {
+    padding: 14px;
+  }
+  
+  .install-prompt-icon {
+    font-size: 28px;
+  }
+  
+  .install-btn {
+    padding: 8px 16px;
+    font-size: 13px;
   }
 }
 </style>
